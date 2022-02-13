@@ -1,14 +1,16 @@
 package method
 
 import Matrix
-import kotlin.math.abs
+import java.math.BigDecimal
 
 /**
  * @author Natalia Nikonova
  */
 class GaussWithMainInColumn(private val matrix: Matrix) : DirectMethod {
     private var countReplace = 0
+    private var solution = mutableListOf<BigDecimal>()
     init {
+        for (i in 0 until matrix.dim) { solution.add(BigDecimal(0)) }
         compute()
     }
 
@@ -20,9 +22,13 @@ class GaussWithMainInColumn(private val matrix: Matrix) : DirectMethod {
                 countReplace++
             }
             for (j in i + 1 until matrix.dim) {
-                val multiplier = -1 * matrix.getElem(j, i) / matrix.getElem(i, i)
+                val multiplier = -matrix.getElem(j, i).divide(matrix.getElem(i, i))
                 matrix.addMultipliedFirstToSecond(i, j, multiplier)
             }
+        }
+        for (i in matrix.dim - 1 downTo 0) {
+            val x = (matrix.getElem(i, matrix.dim) - matrix.multiplyRowByVectorAndSum(i, solution)) / matrix.getElem(i, i)
+            solution[i] = x
         }
     }
 
@@ -31,7 +37,7 @@ class GaussWithMainInColumn(private val matrix: Matrix) : DirectMethod {
         var result = index
         for (j in index + 1 until matrix.dim) {
             val curElem = matrix.getElem(j, index)
-            if (abs(curElem) > abs(maxElem)) {
+            if (curElem.abs() > maxElem.abs()) {
                 maxElem = curElem
                 result = j
             }
@@ -40,9 +46,9 @@ class GaussWithMainInColumn(private val matrix: Matrix) : DirectMethod {
     }
 
 
-    override fun getDeterminant(): Double {
-        var result = if (countReplace % 2 == 0) { 1.0 } else { -1.0 }
-        for (i in 0 until matrix.dim) { result *= matrix.getElem(i, i) }
+    override fun getDeterminant(): BigDecimal {
+        var result = if (countReplace % 2 == 0) { BigDecimal(1) } else { -BigDecimal(1) }
+        for (i in 0 until matrix.dim) { result = result.multiply(matrix.getElem(i, i)) }
         return result
     }
 
@@ -50,11 +56,11 @@ class GaussWithMainInColumn(private val matrix: Matrix) : DirectMethod {
         return matrix
     }
 
-    override fun getSolution(): List<Double> {
-        TODO("Not yet implemented")
+    override fun getSolution(): List<BigDecimal> {
+        return solution
     }
 
-    override fun getInconsistencies(): List<Double> {
+    override fun getInconsistencies(): List<BigDecimal> {
         TODO("Not yet implemented")
     }
 }

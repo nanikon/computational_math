@@ -1,6 +1,7 @@
 package parser
 
 import Matrix
+import java.math.BigDecimal
 
 /**
  * @author Natalia Nikonova
@@ -22,7 +23,7 @@ class ConsoleParser : Parser {
         for (i in 0 until n) {
             while (true) {
                 try {
-                    val row = readLine()!!.split(" ").map { elem -> elem.toDouble() } as MutableList<Double>
+                    val row = readLine()!!.split(" ").map { elem -> elem.toBigDecimal() } as MutableList<BigDecimal>
                     if (row.size != n + 1) { throw Exception() }
                     result.setRow(i, row)
                     break

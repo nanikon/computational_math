@@ -1,13 +1,14 @@
 package method
 
 import Matrix
+import java.math.BigDecimal
 
 /**
  * @author Natalia Nikonova
  */
 interface DirectMethod {
-    fun getDeterminant() : Double
+    fun getDeterminant() : BigDecimal
     fun getTriangularMatrix() : Matrix
-    fun getSolution() : List<Double>
-    fun getInconsistencies() : List<Double>
+    fun getSolution() : List<BigDecimal>
+    fun getInconsistencies() : List<BigDecimal>
 }

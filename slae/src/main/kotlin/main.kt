@@ -18,6 +18,8 @@ fun main() {
     println("Определитель: ${computer.getDeterminant()}")
     println("Треугольная матрица:")
     computer.getTriangularMatrix().printMatrix()
+    println("Решение:")
+    println(computer.getSolution().joinToString(separator = "\n"))
 }
 
 fun choseParser(obj: String) : Parser {

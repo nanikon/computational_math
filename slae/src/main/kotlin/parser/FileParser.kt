@@ -3,6 +3,7 @@ package parser
 import Matrix
 import java.io.File
 import java.io.FileNotFoundException
+import java.math.BigDecimal
 
 /**
  * @author Natalia Nikonova
@@ -32,7 +33,7 @@ class FileParser : Parser {
                 var i = 0
                 val fileName = readLine()
                 File(fileName!!).forEachLine {
-                    val row = it.split(" ").map { elem -> elem.toDouble() } as MutableList<Double>
+                    val row = it.split(" ").map { elem -> elem.toBigDecimal() } as MutableList<BigDecimal>
                     if (row.size != n + 1) { throw Exception() }
                     result.setRow(i, row)
                     i++
