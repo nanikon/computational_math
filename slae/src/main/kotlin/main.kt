@@ -20,6 +20,8 @@ fun main() {
     computer.getTriangularMatrix().printMatrix()
     println("Решение:")
     println(computer.getSolution().joinToString(separator = "\n"))
+    println("Невязки:")
+    println(computer.getDiscrepancies().joinToString(separator = "\n"))
 }
 
 fun choseParser(obj: String) : Parser {

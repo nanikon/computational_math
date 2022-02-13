@@ -9,12 +9,14 @@ import java.math.BigDecimal
 class GaussWithMainInColumn(private val matrix: Matrix) : DirectMethod {
     private var countReplace = 0
     private var solution = mutableListOf<BigDecimal>()
+    private var discrepancies = mutableListOf<BigDecimal>()
     init {
         for (i in 0 until matrix.dim) { solution.add(BigDecimal(0)) }
         compute()
     }
 
     private fun compute() {
+        // Выборка главного элемента по столбцам и прямой ход Гаусса
         for (i in 0 until matrix.dim) {
             val indexRowWithMaxElem = maxElemInColumn(i)
             if (indexRowWithMaxElem != i) {
@@ -26,9 +28,14 @@ class GaussWithMainInColumn(private val matrix: Matrix) : DirectMethod {
                 matrix.addMultipliedFirstToSecond(i, j, multiplier)
             }
         }
+        // Обратный ход Гаусса и получение решения
         for (i in matrix.dim - 1 downTo 0) {
             val x = (matrix.getElem(i, matrix.dim) - matrix.multiplyRowByVectorAndSum(i, solution)) / matrix.getElem(i, i)
             solution[i] = x
+        }
+        // Рассчет неувязок
+        for (i in 0 until matrix.dim) {
+            discrepancies.add(matrix.getElem(i, matrix.dim) - matrix.multiplyRowByVectorAndSum(i, solution))
         }
     }
 
@@ -60,7 +67,7 @@ class GaussWithMainInColumn(private val matrix: Matrix) : DirectMethod {
         return solution
     }
 
-    override fun getInconsistencies(): List<BigDecimal> {
-        TODO("Not yet implemented")
+    override fun getDiscrepancies(): List<BigDecimal> {
+        return discrepancies
     }
 }

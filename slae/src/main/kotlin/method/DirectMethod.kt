@@ -10,5 +10,5 @@ interface DirectMethod {
     fun getDeterminant() : BigDecimal
     fun getTriangularMatrix() : Matrix
     fun getSolution() : List<BigDecimal>
-    fun getInconsistencies() : List<BigDecimal>
+    fun getDiscrepancies() : List<BigDecimal>
 }
