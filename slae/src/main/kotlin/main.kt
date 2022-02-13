@@ -1,3 +1,4 @@
+import method.GaussWithMainInColumn
 import parser.ConsoleParser
 import parser.FileParser
 import parser.Parser
@@ -13,6 +14,10 @@ fun main() {
     val matrix = matrixParser.parseMatrix(n)
     println("Введена следующая матрица:")
     matrix.printMatrix()
+    val computer = GaussWithMainInColumn(matrix)
+    println("Определитель: ${computer.getDeterminant()}")
+    println("Треугольная матрица:")
+    computer.getTriangularMatrix().printMatrix()
 }
 
 fun choseParser(obj: String) : Parser {

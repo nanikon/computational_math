@@ -32,14 +32,12 @@ class FileParser : Parser {
                 var i = 0
                 val fileName = readLine()
                 File(fileName!!).forEachLine {
-                    val row = it.split(" ").map { elem -> elem.toInt() } as MutableList<Int>
-                    if (row.size != n + 1) {
-                        throw Exception("В строке $i элементов меньше чем надо")
-                    }
+                    val row = it.split(" ").map { elem -> elem.toDouble() } as MutableList<Double>
+                    if (row.size != n + 1) { throw Exception() }
                     result.setRow(i, row)
                     i++
                 }
-                if (i != n) { throw Exception("Строк меньше чем надо") }
+                if (i != n) { throw Exception() }
                 return result
             } catch (ex: FileNotFoundException) {
                 println("Файл с таким именем не найден")

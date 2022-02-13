@@ -1,15 +1,28 @@
 package method
 
 import Matrix
+import kotlin.math.abs
 
 /**
  * @author Natalia Nikonova
  */
 class GaussWithMainInColumn(private val matrix: Matrix) : DirectMethod {
+    private var countReplace = 0
+    init {
+        compute()
+    }
+
     private fun compute() {
         for (i in 0 until matrix.dim) {
             val indexRowWithMaxElem = maxElemInColumn(i)
-            if (indexRowWithMaxElem != i) { matrix.swapRows(i, indexRowWithMaxElem) }
+            if (indexRowWithMaxElem != i) {
+                matrix.swapRows(i, indexRowWithMaxElem)
+                countReplace++
+            }
+            for (j in i + 1 until matrix.dim) {
+                val multiplier = -1 * matrix.getElem(j, i) / matrix.getElem(i, i)
+                matrix.addMultipliedFirstToSecond(i, j, multiplier)
+            }
         }
     }
 
@@ -18,7 +31,7 @@ class GaussWithMainInColumn(private val matrix: Matrix) : DirectMethod {
         var result = index
         for (j in index + 1 until matrix.dim) {
             val curElem = matrix.getElem(j, index)
-            if (curElem > maxElem) {
+            if (abs(curElem) > abs(maxElem)) {
                 maxElem = curElem
                 result = j
             }
@@ -27,12 +40,14 @@ class GaussWithMainInColumn(private val matrix: Matrix) : DirectMethod {
     }
 
 
-    override fun getDeterminant(): Int {
-        TODO("Not yet implemented")
+    override fun getDeterminant(): Double {
+        var result = if (countReplace % 2 == 0) { 1.0 } else { -1.0 }
+        for (i in 0 until matrix.dim) { result *= matrix.getElem(i, i) }
+        return result
     }
 
     override fun getTriangularMatrix(): Matrix {
-        TODO("Not yet implemented")
+        return matrix
     }
 
     override fun getSolution(): List<Double> {

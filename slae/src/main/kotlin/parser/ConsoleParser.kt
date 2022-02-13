@@ -17,12 +17,12 @@ class ConsoleParser : Parser {
     }
 
     override fun parseMatrix(n: Int): Matrix {
-        println("Вводите матрицу построчно, элементы с троке должны быть строго через один пробел")
+        println("Вводите матрицу построчно, элементы в строке должны быть строго через один пробел")
         val result = Matrix(n)
         for (i in 0 until n) {
             while (true) {
                 try {
-                    val row = readLine()!!.split(" ").map { elem -> elem.toInt() } as MutableList<Int>
+                    val row = readLine()!!.split(" ").map { elem -> elem.toDouble() } as MutableList<Double>
                     if (row.size != n + 1) { throw Exception() }
                     result.setRow(i, row)
                     break
@@ -31,6 +31,6 @@ class ConsoleParser : Parser {
                 }
             }
         }
-        return result;
+        return result
     }
 }
