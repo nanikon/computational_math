@@ -1,7 +1,7 @@
 /**
  * @author Natalia Nikonova
  */
-class Matrix (private val dim: Int) {
+class Matrix (val dim: Int) {
     private var data : MutableList<MutableList<Int>> = mutableListOf()
 
     init {
@@ -14,6 +14,16 @@ class Matrix (private val dim: Int) {
 
     fun setRow(index: Int, row: MutableList<Int>) {
         data[index] = row
+    }
+
+    fun getElem(row: Int, column: Int) : Int {
+        return data[row][column]
+    }
+
+    fun swapRows(i: Int, j: Int) {
+        val tmpRow = data[i].toMutableList()
+        data[i] = data[j].toMutableList()
+        data[j] = tmpRow
     }
 
     fun printMatrix() {
