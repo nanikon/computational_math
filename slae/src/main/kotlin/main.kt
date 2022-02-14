@@ -2,11 +2,13 @@ import method.GaussWithMainInColumn
 import parser.ConsoleParser
 import parser.FileParser
 import parser.Parser
+import java.math.RoundingMode
 
 /**
  * @author Natalia Nikonova
  */
 fun main() {
+    //GeneratorMatrix(7).matrix.printMatrix()
     val dimParser = choseParser("размерности матрицы")
     val n = dimParser.parseDim()
     println("Введена размерность $n")
@@ -19,9 +21,9 @@ fun main() {
     println("Треугольная матрица:")
     computer.getTriangularMatrix().printMatrix()
     println("Решение:")
-    println(computer.getSolution().joinToString(separator = "\n"))
+    println(computer.getSolution().joinToString(separator = "\n")  { "%.5f".format(it.setScale(5, RoundingMode.HALF_UP )) })
     println("Невязки:")
-    println(computer.getDiscrepancies().joinToString(separator = "\n"))
+    println(computer.getDiscrepancies().joinToString(separator = "\n")  { "%.5f".format(it.setScale(5, RoundingMode.HALF_UP )) })
 }
 
 fun choseParser(obj: String) : Parser {

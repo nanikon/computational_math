@@ -1,4 +1,6 @@
 import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
 
 /**
  * @author Natalia Nikonova
@@ -30,17 +32,20 @@ class Matrix (val dim: Int) {
 
     fun addMultipliedFirstToSecond(first: Int, second: Int, multiplier: BigDecimal) {
         for (i in 0 .. dim) {
-            data[second][i] = data[second][i].add(multiplier.multiply(data[first][i]))
+            data[second][i] = data[second][i].add(multiplier.multiply(data[first][i], MathContext.DECIMAL64))
         }
     }
 
     fun multiplyRowByVectorAndSum(index: Int, vector: List<BigDecimal>) : BigDecimal {
-        return data[index].foldIndexed(BigDecimal(0)) { idx, acc, elem -> if (idx != dim) acc + elem * vector[idx] else acc }
+        return data[index].foldIndexed(BigDecimal(0)) { idx, acc, elem ->
+            if (idx != dim) acc.add(elem.multiply(vector[idx]), MathContext.DECIMAL64)
+            else acc
+        }
     }
 
     fun printMatrix() {
         for (row in data) {
-            println(row.joinToString(separator = "\t"))
+            println(row.joinToString(separator = "\t") { "%.5f".format(it.setScale(5, RoundingMode.HALF_UP))})
         }
     }
 }

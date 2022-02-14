@@ -2,6 +2,9 @@ package method
 
 import Matrix
 import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
+import kotlin.system.exitProcess
 
 /**
  * @author Natalia Nikonova
@@ -24,18 +27,22 @@ class GaussWithMainInColumn(private val matrix: Matrix) : DirectMethod {
                 countReplace++
             }
             for (j in i + 1 until matrix.dim) {
-                val multiplier = -matrix.getElem(j, i).divide(matrix.getElem(i, i))
+                if (matrix.getElem(i, i) == BigDecimal(0)) {
+                    println("Максимальный по модулю ведущий элемент 0. У системы не будет единственного решения, завершение программы")
+                    exitProcess(-1)
+                }
+                val multiplier = -matrix.getElem(j, i).divide(matrix.getElem(i, i), MathContext.DECIMAL64)
                 matrix.addMultipliedFirstToSecond(i, j, multiplier)
             }
         }
         // Обратный ход Гаусса и получение решения
         for (i in matrix.dim - 1 downTo 0) {
-            val x = (matrix.getElem(i, matrix.dim) - matrix.multiplyRowByVectorAndSum(i, solution)) / matrix.getElem(i, i)
+            val x = (matrix.getElem(i, matrix.dim).minus(matrix.multiplyRowByVectorAndSum(i, solution))).divide(matrix.getElem(i, i), MathContext.DECIMAL64)
             solution[i] = x
         }
         // Рассчет неувязок
         for (i in 0 until matrix.dim) {
-            discrepancies.add(matrix.getElem(i, matrix.dim) - matrix.multiplyRowByVectorAndSum(i, solution))
+            discrepancies.add(matrix.getElem(i, matrix.dim).minus(matrix.multiplyRowByVectorAndSum(i, solution)))
         }
     }
 
@@ -52,11 +59,10 @@ class GaussWithMainInColumn(private val matrix: Matrix) : DirectMethod {
         return result
     }
 
-
     override fun getDeterminant(): BigDecimal {
         var result = if (countReplace % 2 == 0) { BigDecimal(1) } else { -BigDecimal(1) }
         for (i in 0 until matrix.dim) { result = result.multiply(matrix.getElem(i, i)) }
-        return result
+        return result.setScale(3, RoundingMode.HALF_UP)
     }
 
     override fun getTriangularMatrix(): Matrix {
