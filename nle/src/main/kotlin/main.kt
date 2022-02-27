@@ -8,13 +8,16 @@ import java.math.BigDecimal
 fun main() {
     // Выбор одного или системы
     // Выбор уравнения
-    val eq = choseEquation()
+    val eq = chooseEquation()
     // Выбор метода
-    val method = choseMethod()
+    val method = chooseMethod()
     // Выбор формата входных данных
     // Считывание данных
     // Проверка данных
     // Рассчет
+    val data = method.solve(BigDecimal.ONE)
+    val printer = choosePrinter()
+    printer.print(data.toString())
     // Выбор формата выходных данных
     // Вывод выходных данных
 }
