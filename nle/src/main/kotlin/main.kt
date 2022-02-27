@@ -1,4 +1,4 @@
-import model.Equation
+import model.OneVariableEquation
 import java.math.BigDecimal
 
 /**
@@ -6,11 +6,21 @@ import java.math.BigDecimal
  */
 
 fun main() {
-
+    // Выбор одного или системы
+    // Выбор уравнения
+    val eq = choseEquation()
+    // Выбор метода
+    val method = choseMethod()
+    // Выбор формата входных данных
+    // Считывание данных
+    // Проверка данных
+    // Рассчет
+    // Выбор формата выходных данных
+    // Вывод выходных данных
 }
 
 val equations = listOf(
-    Equation(
+    OneVariableEquation(
         { x -> x.pow(3).multiply(BigDecimal(1.8))
             .minus(x.pow(2).multiply(BigDecimal(2.47)))
             .minus(x.multiply(BigDecimal(5.53)))

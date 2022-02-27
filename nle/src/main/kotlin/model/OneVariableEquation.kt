@@ -5,7 +5,7 @@ import java.math.BigDecimal
 /**
  * @author Natalia Nikonova
  */
-class Equation(
+class OneVariableEquation(
     private val function: (x: BigDecimal) -> BigDecimal,
     private val firstDerivative: (x: BigDecimal) -> BigDecimal,
     private val stringForm: String

@@ -5,7 +5,7 @@ import java.math.BigDecimal
 /**
  * @author Natalia Nikonova
  */
-data class ResultData(
+data class OneVariableResultData(
     val root: BigDecimal,
     val valueRoot: BigDecimal,
     val countIteration: Int

@@ -1,7 +1,7 @@
 package methods.single
 
-import model.Equation
-import model.ResultData
+import model.OneVariableEquation
+import model.OneVariableResultData
 import java.math.BigDecimal
 import java.math.MathContext
 
@@ -12,9 +12,9 @@ class HalfDivisionMethod : SingleMethod {
    private var leftBorder = BigDecimal.ZERO
    private var rightBorder = BigDecimal.ZERO
    private var isCorrect = false
-   private lateinit var eq: Equation
+   private lateinit var eq: OneVariableEquation
 
-   override fun setAndVerifyData(a: BigDecimal, b: BigDecimal, equation: Equation): Boolean {
+   override fun setAndVerifyData(a: BigDecimal, b: BigDecimal, equation: OneVariableEquation): Boolean {
       eq = equation
       leftBorder = a
       rightBorder = b
@@ -27,7 +27,7 @@ class HalfDivisionMethod : SingleMethod {
       return isCorrect
    }
 
-   override fun solve(approximation: BigDecimal): ResultData {
+   override fun solve(approximation: BigDecimal): OneVariableResultData {
       if (!isCorrect) throw RuntimeException("Сохраненные на данный момент входные данные не валидны, расчет невозможен")
       var a = leftBorder
       var b = rightBorder
@@ -41,7 +41,7 @@ class HalfDivisionMethod : SingleMethod {
          println("Итерация №$count: левая граница $a, правая граница $b, приближение к корню $x, значение функции в нем $y")
          if (y.multiply(eq.valueFunction(a)) < BigDecimal.ZERO) { b = x } else { a = x }
       }
-      return ResultData(root = x, valueRoot = y, countIteration = count)
+      return OneVariableResultData(root = x, valueRoot = y, countIteration = count)
    }
 
 }

@@ -1,7 +1,7 @@
 package methods.single
 
-import model.Equation
-import model.ResultData
+import model.OneVariableEquation
+import model.OneVariableResultData
 import java.math.BigDecimal
 
 /**
@@ -11,12 +11,12 @@ class SimpleIterationsMethod : SingleMethod {
    private var leftBorder = BigDecimal.ZERO
    private var rightBorder = BigDecimal.ZERO
    private var isCorrect = false
-   private lateinit var eq: Equation
+   private lateinit var eq: OneVariableEquation
 
    private var lambda = BigDecimal.ZERO
    private var q = BigDecimal.ZERO
 
-   override fun setAndVerifyData(a: BigDecimal, b: BigDecimal, equation: Equation): Boolean {
+   override fun setAndVerifyData(a: BigDecimal, b: BigDecimal, equation: OneVariableEquation): Boolean {
       eq = equation
       leftBorder = a
       rightBorder = b
@@ -32,7 +32,7 @@ class SimpleIterationsMethod : SingleMethod {
       return isCorrect
    }
 
-   override fun solve(approximation: BigDecimal): ResultData {
+   override fun solve(approximation: BigDecimal): OneVariableResultData {
       if (!isCorrect) throw RuntimeException("Сохраненные на данный момент входные данные не валидны, расчет невозможен")
       var last: BigDecimal
       var current = leftBorder
@@ -41,8 +41,10 @@ class SimpleIterationsMethod : SingleMethod {
          last = current
          current = eq.valueFunction(last).multiply(lambda).plus(last)
          count++
+         println("Итерация №$count: предыдущее приближение $last, текущее приближение $current, " +
+            "значение функции на предыдущем ${eq.valueFunction(last)}, модуль разницы ${current.minus(last).abs()}")
       } while (((q <= BigDecimal(0.5)) && (current.minus(last).abs() < approximation)) ||
          ((q > BigDecimal(0.5)) && (current.minus(last).abs() < BigDecimal.ONE.minus(q).divide(q).multiply(approximation))))
-      return ResultData(root = current, valueRoot = eq.valueFunction(current), countIteration = count)
+      return OneVariableResultData(root = current, valueRoot = eq.valueFunction(current), countIteration = count)
    }
 }
