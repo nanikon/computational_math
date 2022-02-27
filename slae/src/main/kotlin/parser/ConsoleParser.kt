@@ -2,7 +2,6 @@ package parser
 
 import Matrix
 import java.math.BigDecimal
-import java.math.RoundingMode
 
 /**
  * @author Natalia Nikonova
@@ -24,7 +23,7 @@ class ConsoleParser : Parser {
         for (i in 0 until n) {
             while (true) {
                 try {
-                    val row = readLine()!!.split(" ").map { elem -> elem.toBigDecimal().setScale(3, RoundingMode.HALF_UP) } as MutableList<BigDecimal>
+                    val row = readLine()!!.split(" ").map { elem -> elem.toBigDecimal() } as MutableList<BigDecimal>
                     if (row.size != n + 1) { throw Exception() }
                     result.setRow(i, row)
                     break

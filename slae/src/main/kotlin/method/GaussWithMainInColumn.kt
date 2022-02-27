@@ -24,16 +24,22 @@ class GaussWithMainInColumn(private val matrix: Matrix) : DirectMethod {
             val indexRowWithMaxElem = maxElemInColumn(i)
             if (indexRowWithMaxElem != i) {
                 matrix.swapRows(i, indexRowWithMaxElem)
+                println("Перестановка строк ${i + 1} и ${indexRowWithMaxElem + 1}. Получена матрица:")
+                matrix.printMatrix()
                 countReplace++
             }
-            for (j in i + 1 until matrix.dim) {
-                if (matrix.getElem(i, i) == BigDecimal(0)) {
-                    println("Максимальный по модулю ведущий элемент 0. У системы не будет единственного решения, завершение программы")
-                    exitProcess(-1)
+            try {
+                if (matrix.getElem(i, i) == BigDecimal(0)) { throw ArithmeticException() }
+                for (j in i + 1 until matrix.dim) {
+                    val multiplier = -matrix.getElem(j, i).divide(matrix.getElem(i, i), MathContext.DECIMAL64)
+                    matrix.addMultipliedFirstToSecond(i, j, multiplier)
                 }
-                val multiplier = -matrix.getElem(j, i).divide(matrix.getElem(i, i), MathContext.DECIMAL64)
-                matrix.addMultipliedFirstToSecond(i, j, multiplier)
+            } catch (ex: ArithmeticException) {
+                println("Максимальный по модулю ведущий элемент 0 в строке ${i + 1}. У системы не будет единственного решения, завершение программы")
+                exitProcess(-1)
             }
+            println("Из матрицы выражен элемент ${i + 1}. Получена матрица:")
+            matrix.printMatrix()
         }
         // Обратный ход Гаусса и получение решения
         for (i in matrix.dim - 1 downTo 0) {

@@ -45,7 +45,7 @@ class Matrix (val dim: Int) {
 
     fun printMatrix() {
         for (row in data) {
-            println(row.joinToString(separator = "\t") { "%.5f".format(it.setScale(5, RoundingMode.HALF_UP))})
+            println(row.joinToString(separator = " "){ "%4.5f".format(it.setScale(5, RoundingMode.HALF_UP )) })
         }
     }
 }
