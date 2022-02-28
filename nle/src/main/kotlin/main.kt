@@ -1,5 +1,5 @@
-import model.OneVariableEquation
-import java.math.BigDecimal
+import methods.system.NewtonMethod
+import model.systemEquations
 
 /**
  * @author Natalia Nikonova
@@ -7,32 +7,32 @@ import java.math.BigDecimal
 
 fun main() {
     // Выбор одного или системы
-    // Выбор уравнения
-    val eq = chooseEquation()
-    // Выбор метода
-    val method = chooseMethod()
-    // Выбор формата входных данных
-    // Считывание данных
-    // Проверка данных
-    // Рассчет
-    val data = method.solve(BigDecimal.ONE)
-    val printer = choosePrinter()
-    printer.print(data.toString())
-    // Выбор формата выходных данных
-    // Вывод выходных данных
+    val mode = chooseMode()
+    if (mode == "1") {
+        // Выбор уравнения
+        val eq = chooseEquation()
+        // Выбор метода
+        val method = chooseMethod(eq)
+        // Выбор формата входных данных
+        val parser = chooseParser("границ интервала изоляции корней и погрешности")
+        // Считывание данных
+        // Проверка данных
+        parser.parseInterval(method)
+        // Рассчет
+        val data = method.solve(parser.parseApprox())
+        // Выбор формата выходных данных
+        // Вывод выходных данных
+        val printer = choosePrinter()
+        printer.print(data.toString())
+    } else {
+        val firstEq = chooseEquations("первое", "-1")
+        val secondEq = chooseEquations("второе", (systemEquations.indexOf(firstEq) + 1).toString())
+        // сюды график
+        val method = NewtonMethod(firstEq, secondEq)
+        val parser = chooseParser("границ интервала изоляции корней и погрешности")
+        parser.parseInitValues(method)
+        val data = method.solve(parser.parseApprox())
+        val printer = choosePrinter()
+        printer.print(data.toString())
+    }
 }
-
-val equations = listOf(
-    OneVariableEquation(
-        { x -> x.pow(3).multiply(BigDecimal(1.8))
-            .minus(x.pow(2).multiply(BigDecimal(2.47)))
-            .minus(x.multiply(BigDecimal(5.53)))
-            .minus(BigDecimal(1.539))
-        },
-        { x -> x.pow(2).multiply(BigDecimal(5.4))
-            .minus(x.multiply(BigDecimal(4.94)))
-            .minus(BigDecimal(5.53))
-        },
-        "1,8x^3 - 2,47x^2 - 5,53x + 1,539"
-    )
-)

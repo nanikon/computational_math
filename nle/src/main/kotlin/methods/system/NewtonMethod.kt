@@ -8,17 +8,20 @@ import java.math.MathContext
 /**
  * @author Natalia Nikonova
  */
-class NewtonMethod : SystemMethod {
-    private lateinit var firstEq: TwoVariableEquation
-    private lateinit var secondEq: TwoVariableEquation
+class NewtonMethod(
+    var firstEq: TwoVariableEquation,
+    var secondEq: TwoVariableEquation
+) : SystemMethod {
+    private lateinit var x0: BigDecimal
+    private lateinit var y0: BigDecimal
 
-    override fun setAndVerifyData(a: BigDecimal, b: BigDecimal, firstEquation: TwoVariableEquation, secondEquation: TwoVariableEquation): Boolean {
-        firstEq = firstEquation
-        secondEq = secondEquation
+    override fun setAndVerifyData(x: BigDecimal, y: BigDecimal): Boolean {
+        x0 = x
+        y0 = y
         return true
     }
 
-    override fun solve(x0: BigDecimal, y0: BigDecimal, approximation: BigDecimal): ManyVariablesResultData {
+    override fun solve(approximation: BigDecimal): ManyVariablesResultData {
         var count = 0
         var deltaX: BigDecimal
         var deltaY: BigDecimal

@@ -4,25 +4,26 @@ import model.OneVariableEquation
 import model.OneVariableResultData
 import java.math.BigDecimal
 import java.math.MathContext
+import java.math.RoundingMode
 
 /**
  * @author Natalia Nikonova
  */
-class HalfDivisionMethod : SingleMethod {
+class HalfDivisionMethod(
+   var eq: OneVariableEquation
+) : SingleMethod {
    private var leftBorder = BigDecimal.ZERO
    private var rightBorder = BigDecimal.ZERO
    private var isCorrect = false
-   private lateinit var eq: OneVariableEquation
 
-   override fun setAndVerifyData(a: BigDecimal, b: BigDecimal, equation: OneVariableEquation): Boolean {
-      eq = equation
+   override fun setAndVerifyData(a: BigDecimal, b: BigDecimal): Boolean {
       leftBorder = a
       rightBorder = b
       val left = a.multiply(BigDecimal(1000)).toInt()
       val right = b.multiply(BigDecimal(1000)).toInt()
       val marker = eq.valueFirstDerivative(a)
-      isCorrect = eq.valueFunction(a) * eq.valueFunction(b) < BigDecimal.ZERO && (left..right).all {
-         marker * eq.valueFirstDerivative(BigDecimal(it.toDouble() / 1000)) >= BigDecimal.ZERO
+      isCorrect = eq.valueFunction(a) * eq.valueFunction(b) <= BigDecimal.ZERO && (left..right).all {
+         marker.multiply(eq.valueFirstDerivative(BigDecimal(it.toDouble() / 1000).setScale(3, RoundingMode.HALF_UP))) >= BigDecimal.ZERO
       }
       return isCorrect
    }
@@ -33,7 +34,7 @@ class HalfDivisionMethod : SingleMethod {
       var b = rightBorder
       var count = 0
       var x = BigDecimal.ZERO
-      var y = BigDecimal.ZERO
+      var y = approximation.plus(BigDecimal.ONE)
       while ((b.minus(a) > approximation) && y.abs() > approximation) {
          x = a.plus(b).divide(BigDecimal(2), MathContext.DECIMAL64)
          y = eq.valueFunction(x)
