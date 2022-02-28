@@ -10,6 +10,6 @@ data class OneVariableResultData(
     val valueRoot: BigDecimal,
     val countIteration: Int
 ) {
-    override fun toString(): String = "Найденный корень уравнения: $root\n Значение функции в корне: $valueRoot\n" +
+    override fun toString(): String = "Найденный корень уравнения: $root\nЗначение функции в корне: $valueRoot\n" +
             "Число итераций: $countIteration"
 }

@@ -40,10 +40,10 @@ class NewtonMethod(
             x += deltaX
             y += deltaY
             count++
-            println("Итерация №$count: приближение к Х $x, приближение к $y, приращение к Х $deltaX, " +
+            println("Итерация №$count: приближение к Х $x, приближение к Y $y, приращение к Х $deltaX, " +
                     "приращение к Y $deltaY, значение первого уравнения ${firstEq.function(x, y)}, " +
                     "второго ${secondEq.function(x, y)}")
-        } while (deltaX > approximation || deltaY > approximation)
+        } while (deltaX.abs() >= approximation || deltaY.abs() >= approximation)
         return ManyVariablesResultData(root = listOf(x, y), errors = listOf(deltaX, deltaY), countIteration = count)
     }
 }

@@ -18,9 +18,15 @@ class TwoVariableEquation(
 
 val systemEquations = listOf(
     TwoVariableEquation(
-        {x, y -> BigDecimal(sin(y.toDouble())).plus(x.pow(2))},
-        {x, y -> x + y},
-        {x, y -> x + y},
-        "sin(y)+x^2=0"
+        { x, y -> x.pow(2).plus(y.pow(2)).minus(BigDecimal(4)) },
+        { x, y -> x.multiply(BigDecimal(2)) },
+        { x, y -> y.multiply(BigDecimal(2)) },
+        "x^2 + y^2 = 4"
+    ),
+    TwoVariableEquation(
+        {x, y -> x.pow(2).multiply(BigDecimal(-3)).plus(y)},
+        {x, y -> x.multiply(BigDecimal(-6))},
+        {x, y -> BigDecimal.ONE},
+        "y = 3 * x^2"
     )
 )

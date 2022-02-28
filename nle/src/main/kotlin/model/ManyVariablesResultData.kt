@@ -11,5 +11,5 @@ data class ManyVariablesResultData(
    val countIteration: Int
 ) {
    override fun toString(): String = "Вектор неизвестных:\n" + root.joinToString(separator="\n") +
-           "Вектор погрешностей:\n" + errors.joinToString(separator = "\n") + "Число итераций:\n$countIteration"
+           "\nВектор погрешностей:\n" + errors.joinToString(separator = "\n") + "\nЧисло итераций:\n$countIteration"
 }

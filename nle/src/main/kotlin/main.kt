@@ -29,7 +29,7 @@ fun main() {
         val secondEq = chooseEquations("второе", (systemEquations.indexOf(firstEq) + 1).toString())
         // сюды график
         val method = NewtonMethod(firstEq, secondEq)
-        val parser = chooseParser("границ интервала изоляции корней и погрешности")
+        val parser = chooseParser("начального приближения переменных и погрешности")
         parser.parseInitValues(method)
         val data = method.solve(parser.parseApprox())
         val printer = choosePrinter()
