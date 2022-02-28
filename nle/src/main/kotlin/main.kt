@@ -28,6 +28,7 @@ fun main() {
         val firstEq = chooseEquations("первое", "-1")
         val secondEq = chooseEquations("второе", (systemEquations.indexOf(firstEq) + 1).toString())
         // сюды график
+        createGraphTwoVariable(firstEq, secondEq)
         val method = NewtonMethod(firstEq, secondEq)
         val parser = chooseParser("начального приближения переменных и погрешности")
         parser.parseInitValues(method)
