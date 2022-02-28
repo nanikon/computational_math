@@ -1,5 +1,6 @@
 package methods.single
 
+import createGraphOneVariable
 import model.OneVariableEquation
 import model.OneVariableResultData
 import java.math.BigDecimal
@@ -49,6 +50,8 @@ class SimpleIterationsMethod(
             "значение функции на предыдущем ${eq.valueFunction(last)}, модуль разницы ${current.minus(last).abs()}")
       } while (((q <= BigDecimal(0.5)) && (current.minus(last).abs() >= approximation)) ||
          ((q > BigDecimal(0.5)) && (current.minus(last).abs() >= BigDecimal.ONE.minus(q).divide(q, MathContext.DECIMAL64).multiply(approximation))))
+      val delta = rightBorder.minus(leftBorder).divide(BigDecimal.TEN, MathContext.DECIMAL64)
+      createGraphOneVariable(leftBorder - delta, rightBorder + delta, eq)
       return OneVariableResultData(root = current, valueRoot = eq.valueFunction(current), countIteration = count)
    }
 }
