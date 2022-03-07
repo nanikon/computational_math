@@ -8,7 +8,7 @@ import java.math.BigDecimal
  * @author Natalia Nikonova
  */
 class ConsoleParser : Parser {
-    override fun parseInterval(method: SingleMethod) {
+    private fun parseInterval(method: SingleMethod) {
         while(true) {
             val a = parseA("левую границу интервала")
             val b = parseB(a)
@@ -40,7 +40,7 @@ class ConsoleParser : Parser {
         }
     }
 
-    override fun parseInitValues(method: SystemMethod) {
+    private fun parseInitValues(method: SystemMethod) {
         while(true) {
             val x0 = parseA("приближение переменной Х")
             val y0 = parseA("приближение переменной Y")
@@ -50,13 +50,23 @@ class ConsoleParser : Parser {
         }
     }
 
-    override fun parseApprox(): BigDecimal {
+    private fun parseApprox(): BigDecimal {
         println("Введите погрешность:")
         while (true) {
             val result = readLine()?.trim()?.toBigDecimal()
             if (result != null && result < BigDecimal.ONE) { return result }
             println("Некорректный ввод: погрешность должна быть дробным числом и лучше меньше 1. Попробуйте ещё раз")
         }
+    }
+
+    override fun parseIntervalAndApprox(method: SingleMethod) : BigDecimal {
+        parseInterval(method)
+        return parseApprox()
+    }
+
+    override fun parseInitValuesAndApprox(method: SystemMethod) : BigDecimal {
+        parseInitValues(method)
+        return parseApprox()
     }
 
 }

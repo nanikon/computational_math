@@ -43,7 +43,7 @@ class HalfDivisionMethod(
          println("Итерация №$count: левая граница $a, правая граница $b, приближение к корню $x, значение функции в нем $y")
          if (y.multiply(eq.valueFunction(a)) < BigDecimal.ZERO) { b = x } else { a = x }
       }
-      val delta = rightBorder.minus(leftBorder).divide(BigDecimal.TEN, MathContext.DECIMAL64)
+      val delta = rightBorder.minus(leftBorder).divide(BigDecimal(5), MathContext.DECIMAL64)
       createGraphOneVariable(leftBorder - delta, rightBorder + delta, eq)
       return OneVariableResultData(root = x, valueRoot = y, countIteration = count)
    }

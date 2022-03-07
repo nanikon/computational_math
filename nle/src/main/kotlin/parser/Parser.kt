@@ -8,7 +8,6 @@ import java.math.BigDecimal
  * @author Natalia Nikonova
  */
 interface Parser {
-   fun parseInterval(method: SingleMethod)
-   fun parseApprox(): BigDecimal
-   fun parseInitValues(method: SystemMethod)
+   fun parseIntervalAndApprox(method: SingleMethod) : BigDecimal
+   fun parseInitValuesAndApprox(method: SystemMethod) : BigDecimal
 }
