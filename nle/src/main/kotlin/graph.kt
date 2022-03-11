@@ -4,8 +4,6 @@ import jetbrains.letsPlot.letsPlot
 import jetbrains.datalore.plot.PlotSvgExport
 import jetbrains.letsPlot.intern.toSpec
 
-import model.OneVariableEquation
-import model.TwoVariableEquation
 import java.awt.Desktop
 import java.io.File
 import java.math.BigDecimal
