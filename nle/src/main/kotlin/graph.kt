@@ -30,13 +30,15 @@ fun createGraph(
         try {
             firstValue.add(firstEq(range[i]))
             firstRange.add(range[i])
-        } catch (_: ArithmeticException) {}
+        } catch (_: ArithmeticException) {
+        } catch (_: NumberFormatException) {}
     }
     for (i in range.indices) {
         try {
             secondValue.add(secondEq(range[i]))
             secondRange.add(range[i])
-        } catch (_: ArithmeticException) {}
+        } catch (_: ArithmeticException) {
+        } catch (_: NumberFormatException) {}
     }
 
     val firstData = mapOf(

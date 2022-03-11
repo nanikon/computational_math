@@ -1,3 +1,4 @@
+import exception.SolutionNotExistException
 import methods.system.NewtonMethod
 import model.systemEquations
 
@@ -20,8 +21,10 @@ fun main() {
         createGraph(firstEq.yFromX, secondEq.yFromX)
         val method = NewtonMethod(firstEq, secondEq)
         val parser = chooseParser("начального приближения переменных и погрешности")
-        val data = method.solve(parser.parseInitValuesAndApprox(method))
-        val printer = choosePrinter()
-        printer.print(data.toString())
+        try {
+            val data = method.solve(parser.parseInitValuesAndApprox(method))
+            val printer = choosePrinter()
+            printer.print(data.toString())
+        } catch (ex: SolutionNotExistException) { println(ex.message) }
     }
 }

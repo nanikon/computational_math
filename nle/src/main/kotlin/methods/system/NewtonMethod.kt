@@ -1,5 +1,6 @@
 package methods.system
 
+import exception.SolutionNotExistException
 import model.ManyVariablesResultData
 import model.TwoVariableEquation
 import java.math.BigDecimal
@@ -28,7 +29,7 @@ class NewtonMethod(
         var x = x0
         var y = y0
         do {
-            val a = firstEq.derivativeX(x, y)
+            val a = if(firstEq.derivativeX(x, y) == BigDecimal.ZERO) approximation else firstEq.derivativeX(x, y)
             val b = firstEq.derivativeY(x, y)
             val f = - firstEq.function(x, y)
             val c = secondEq.derivativeX(x, y)
@@ -43,6 +44,7 @@ class NewtonMethod(
             println("Итерация №$count: приближение к Х $x, приближение к Y $y, приращение к Х $deltaX, " +
                     "приращение к Y $deltaY, значение первого уравнения ${firstEq.function(x, y)}, " +
                     "второго ${secondEq.function(x, y)}")
+            if (count >= 100) { throw SolutionNotExistException(count) }
         } while (deltaX.abs() >= approximation || deltaY.abs() >= approximation)
         return ManyVariablesResultData(root = listOf(x, y), errors = listOf(deltaX, deltaY), countIteration = count)
     }
