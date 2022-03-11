@@ -21,7 +21,7 @@ class ConsoleParser : Parser {
     private fun parseA(obj: String) : BigDecimal {
         println("Введите $obj:")
         while (true) {
-            val result = readLine()?.trim()?.toBigDecimal()
+            val result = readLine()?.trim()?.toBigDecimalOrNull()
             if (result != null) {
                 return result
             }
@@ -32,7 +32,7 @@ class ConsoleParser : Parser {
     private fun parseB(a: BigDecimal) : BigDecimal {
         println("Введите правую границу интервала:")
         while (true) {
-            val result = readLine()?.trim()?.toBigDecimal()
+            val result = readLine()?.trim()?.toBigDecimalOrNull()
             if (result != null && result > a) {
                 return result
             }
@@ -53,7 +53,7 @@ class ConsoleParser : Parser {
     private fun parseApprox(): BigDecimal {
         println("Введите погрешность:")
         while (true) {
-            val result = readLine()?.trim()?.toBigDecimal()
+            val result = readLine()?.trim()?.toBigDecimalOrNull()
             if (result != null && result < BigDecimal.ONE) { return result }
             println("Некорректный ввод: погрешность должна быть дробным числом и лучше меньше 1. Попробуйте ещё раз")
         }
