@@ -6,14 +6,10 @@ import java.math.BigDecimal
  * @author Natalia Nikonova
  */
 class OneVariableEquation(
-    private val function: (x: BigDecimal) -> BigDecimal,
-    private val firstDerivative: (x: BigDecimal) -> BigDecimal,
+    val function: (x: BigDecimal) -> BigDecimal,
+    val firstDerivative: (x: BigDecimal) -> BigDecimal,
     private val stringForm: String
 ) {
-    fun valueFunction(x: BigDecimal): BigDecimal = function(x)
-
-    fun valueFirstDerivative(x: BigDecimal): BigDecimal = firstDerivative(x)
-
     override fun toString(): String = stringForm
 }
 

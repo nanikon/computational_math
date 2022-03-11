@@ -15,36 +15,28 @@ import java.math.MathContext
  * @author Natalia Nikonova
  */
 
-fun createGraphOneVariable(a: BigDecimal, b: BigDecimal, eq: OneVariableEquation) {
-    val left = a.multiply(BigDecimal(1000)).toInt()
-    val right = b.multiply(BigDecimal(1000)).toInt()
+fun createGraph(
+    firstEq: (BigDecimal) -> BigDecimal,
+    secondEq: (BigDecimal) -> BigDecimal,
+    leftBorder: BigDecimal = BigDecimal(-5),
+    rightBorder: BigDecimal = BigDecimal(5)
+) {
+    val left = leftBorder.multiply(BigDecimal(1000)).toInt()
+    val right = rightBorder.multiply(BigDecimal(1000)).toInt()
     val range = (left..right).toList().map{ it.toBigDecimal().divide(BigDecimal(1000), MathContext.DECIMAL64)}
-    val data = mapOf(
-        "x" to range,
-        "y" to range.map {eq.valueFunction(it) }
-    )
-    val plot = letsPlot(data) + geomPoint(
-        color = "dark-green",
-        size = 1.0,
-    ) { x = "x"; y = "y" }
-    show(plot)
-}
-
-fun createGraphTwoVariable(firstEq: TwoVariableEquation, secondEq: TwoVariableEquation) {
-    val range = (-5000..5000).toList().map{ it.toBigDecimal().divide(BigDecimal(1000), MathContext.DECIMAL64)}
     val firstRange = mutableListOf<BigDecimal>()
     val secondRange = mutableListOf<BigDecimal>()
     val firstValue = mutableListOf<BigDecimal>()
     val secondValue = mutableListOf<BigDecimal>()
     for (i in range.indices) {
         try {
-            firstValue.add(firstEq.yFromX(range[i]))
+            firstValue.add(firstEq(range[i]))
             firstRange.add(range[i])
         } catch (_: ArithmeticException) {}
     }
     for (i in range.indices) {
         try {
-            secondValue.add(secondEq.yFromX(range[i]))
+            secondValue.add(secondEq(range[i]))
             secondRange.add(range[i])
         } catch (_: ArithmeticException) {}
     }

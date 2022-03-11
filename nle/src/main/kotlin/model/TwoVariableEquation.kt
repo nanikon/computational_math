@@ -22,15 +22,15 @@ val systemEquations = listOf(
     TwoVariableEquation(
         { x, y -> x.pow(2).plus(y.pow(2)).minus(BigDecimal(4)) },
         { x -> BigDecimal(4).minus(x.pow(2)).sqrt(MathContext.DECIMAL64) },
-        { x, y -> x.multiply(BigDecimal(2)) },
-        { x, y -> y.multiply(BigDecimal(2)) },
+        { x, _ -> x.multiply(BigDecimal(2)) },
+        { _, y -> y.multiply(BigDecimal(2)) },
         "x^2 + y^2 = 4"
     ),
     TwoVariableEquation(
         {x, y -> x.pow(2).multiply(BigDecimal(-3)).plus(y)},
         { x -> x.pow(2).multiply(BigDecimal(3)) },
-        {x, y -> x.multiply(BigDecimal(-6))},
-        {x, y -> BigDecimal.ONE},
+        {x, _ -> x.multiply(BigDecimal(-6))},
+        {_, _ -> BigDecimal.ONE},
         "y = 3 * x^2"
     )
 )

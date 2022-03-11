@@ -1,6 +1,6 @@
 package methods.single
 
-import createGraphOneVariable
+import createGraph
 import model.OneVariableEquation
 import model.OneVariableResultData
 import java.math.BigDecimal
@@ -22,9 +22,9 @@ class HalfDivisionMethod(
       rightBorder = b
       val left = a.multiply(BigDecimal(1000)).toInt()
       val right = b.multiply(BigDecimal(1000)).toInt()
-      val marker = eq.valueFirstDerivative(a)
-      isCorrect = eq.valueFunction(a) * eq.valueFunction(b) <= BigDecimal.ZERO && (left..right).all {
-         marker.multiply(eq.valueFirstDerivative(BigDecimal(it.toDouble() / 1000).setScale(3, RoundingMode.HALF_UP))) >= BigDecimal.ZERO
+      val marker = eq.firstDerivative(a)
+      isCorrect = eq.function(a) * eq.function(b) <= BigDecimal.ZERO && (left..right).all {
+         marker.multiply(eq.firstDerivative(BigDecimal(it.toDouble() / 1000).setScale(3, RoundingMode.HALF_UP))) >= BigDecimal.ZERO
       }
       return isCorrect
    }
@@ -38,14 +38,13 @@ class HalfDivisionMethod(
       var y = approximation.plus(BigDecimal.ONE)
       while ((b.minus(a) > approximation) && y.abs() > approximation) {
          x = a.plus(b).divide(BigDecimal(2), MathContext.DECIMAL64)
-         y = eq.valueFunction(x)
+         y = eq.function(x)
          count++
          println("Итерация №$count: левая граница $a, правая граница $b, приближение к корню $x, значение функции в нем $y")
-         if (y.multiply(eq.valueFunction(a)) < BigDecimal.ZERO) { b = x } else { a = x }
+         if (y.multiply(eq.function(a)) < BigDecimal.ZERO) { b = x } else { a = x }
       }
       val delta = rightBorder.minus(leftBorder).divide(BigDecimal(5), MathContext.DECIMAL64)
-      createGraphOneVariable(leftBorder - delta, rightBorder + delta, eq)
+      createGraph(eq.function, { BigDecimal(0) }, leftBorder - delta, rightBorder + delta)
       return OneVariableResultData(root = x, valueRoot = y, countIteration = count)
    }
-
 }

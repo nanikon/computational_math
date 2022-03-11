@@ -68,5 +68,4 @@ class ConsoleParser : Parser {
         parseInitValues(method)
         return parseApprox()
     }
-
 }

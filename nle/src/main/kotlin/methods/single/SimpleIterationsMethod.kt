@@ -1,6 +1,6 @@
 package methods.single
 
-import createGraphOneVariable
+import createGraph
 import model.OneVariableEquation
 import model.OneVariableResultData
 import java.math.BigDecimal
@@ -26,11 +26,11 @@ class SimpleIterationsMethod(
       val left = a.multiply(BigDecimal(1000)).toInt()
       val right = b.multiply(BigDecimal(1000)).toInt()
       lambda = - BigDecimal.ONE.divide((left..right).maxOf {
-         eq.valueFirstDerivative(BigDecimal(it.toDouble() / 1000).setScale(3, RoundingMode.HALF_UP))
+         eq.firstDerivative(BigDecimal(it.toDouble() / 1000).setScale(3, RoundingMode.HALF_UP))
       }, MathContext.DECIMAL64)
       q = (left..right).maxOf {
          BigDecimal.ONE.plus(
-            lambda.multiply(eq.valueFirstDerivative(BigDecimal(it.toDouble() / 1000).setScale(3, RoundingMode.HALF_UP)))
+            lambda.multiply(eq.firstDerivative(BigDecimal(it.toDouble() / 1000).setScale(3, RoundingMode.HALF_UP)))
          ).abs()
       }
       isCorrect = q < BigDecimal.ONE
@@ -44,14 +44,14 @@ class SimpleIterationsMethod(
       var count = 0
       do {
          last = current
-         current = eq.valueFunction(last).multiply(lambda, MathContext.DECIMAL64).plus(last)
+         current = eq.function(last).multiply(lambda, MathContext.DECIMAL64).plus(last)
          count++
          println("Итерация №$count: предыдущее приближение $last, текущее приближение $current, " +
-            "значение функции на предыдущем ${eq.valueFunction(last)}, модуль разницы ${current.minus(last).abs()}")
+            "значение функции на предыдущем ${eq.function(last)}, модуль разницы ${current.minus(last).abs()}")
       } while (((q <= BigDecimal(0.5)) && (current.minus(last).abs() >= approximation)) ||
          ((q > BigDecimal(0.5)) && (current.minus(last).abs() >= BigDecimal.ONE.minus(q).divide(q, MathContext.DECIMAL64).multiply(approximation))))
       val delta = rightBorder.minus(leftBorder).divide(BigDecimal(5), MathContext.DECIMAL64)
-      createGraphOneVariable(leftBorder - delta, rightBorder + delta, eq)
-      return OneVariableResultData(root = current, valueRoot = eq.valueFunction(current), countIteration = count)
+      createGraph(eq.function, { BigDecimal(0) }, leftBorder - delta, rightBorder + delta)
+      return OneVariableResultData(root = current, valueRoot = eq.function(current), countIteration = count)
    }
 }
