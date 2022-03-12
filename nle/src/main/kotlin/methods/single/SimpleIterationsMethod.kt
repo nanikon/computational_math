@@ -49,7 +49,9 @@ class SimpleIterationsMethod(
          println("Итерация №$count: предыдущее приближение $last, текущее приближение $current, " +
             "значение функции на предыдущем ${eq.function(last)}, модуль разницы ${current.minus(last).abs()}")
       } while (((q <= BigDecimal(0.5)) && (current.minus(last).abs() >= approximation)) ||
-         ((q > BigDecimal(0.5)) && (current.minus(last).abs() >= BigDecimal.ONE.minus(q).divide(q, MathContext.DECIMAL64).multiply(approximation))))
+         ((q > BigDecimal(0.5))
+                 && (current.minus(last).abs() >= BigDecimal.ONE.minus(q).divide(q, MathContext.DECIMAL64).multiply(approximation))))
+      println("Остановка. Значение q=$q, |f_i-f_i-1|=${current.minus(last).abs()}, eps=$approximation, (1-q)/q*eps=${BigDecimal.ONE.minus(q).divide(q, MathContext.DECIMAL64).multiply(approximation)}")
       val delta = rightBorder.minus(leftBorder).divide(BigDecimal(5), MathContext.DECIMAL64)
       createGraph(eq.function, { BigDecimal(0) }, leftBorder - delta, rightBorder + delta)
       return OneVariableResultData(root = current, valueRoot = eq.function(current), countIteration = count)
