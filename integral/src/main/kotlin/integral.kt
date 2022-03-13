@@ -14,15 +14,17 @@ fun main() {
 
 fun calculateIntegral(a: BigDecimal, b: BigDecimal, approximation: BigDecimal, function: IntegrateFunction, method: Method) {
     var n = 4
-    var currentValue = method.calculateSquare(a, b, n, function)
+    var currentValue = method.calculateSquare(a, b, getH(a, b, n), function)
     var errorRate: BigDecimal
     do {
         n *= 2
         val lastValue = currentValue
-        currentValue = method.calculateSquare(a, b, n, function)
+        currentValue = method.calculateSquare(a, b, getH(a, b, n), function)
         errorRate = currentValue.minus(lastValue).divide((2.0.pow(method.accuracyOrder()) - 1).toBigDecimal(), MathContext.DECIMAL64)
         println("При разбиении на $n частей значение интеграла $currentValue, погрешность $errorRate")
     } while (errorRate > approximation)
     println("\nУра, мы приблизились к нужной точности!")
     println("Ответ: значение интеграла - $currentValue, число разбиения интервала интегрирования $n")
 }
+
+fun getH(a: BigDecimal, b: BigDecimal, n: Int) : BigDecimal = b.minus(a).divide(n.toBigDecimal(), MathContext.DECIMAL64)
