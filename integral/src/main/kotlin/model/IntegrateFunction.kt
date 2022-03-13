@@ -18,7 +18,7 @@ val functions = listOf(
     IntegrateFunction(
         { x -> x.pow(3).multiply(BigDecimal(3))
             .minus(x.pow(2).multiply(BigDecimal(4)))
-            .minus(x.multiply(BigDecimal(5)))
+            .plus(x.multiply(BigDecimal(5)))
             .minus(BigDecimal(16))
         },
         "3x^3 - 4x^2 + 5x - 16"
