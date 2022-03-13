@@ -5,7 +5,7 @@ import java.math.BigDecimal
 /**
  * @author Natalia Nikonova
  */
-class Function(
+class IntegrateFunction(
     private val function: (BigDecimal) -> BigDecimal,
     private val view: String
 ) {
