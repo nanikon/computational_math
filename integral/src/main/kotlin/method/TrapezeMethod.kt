@@ -30,4 +30,6 @@ class TrapezeMethod : Method {
     }
 
     override fun accuracyOrder(): Int = 2
+
+    override fun toString(): String = "Метод трапеций"
 }

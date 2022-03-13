@@ -16,4 +16,6 @@ class RightRectMethod : RectMethod() {
         } while (added < b)
         return result
     }
+
+    override fun toString(): String = "Метод правых прямоугольников"
 }

@@ -17,4 +17,6 @@ class MediumRectMethod : RectMethod() {
         } while (added < b)
         return result
     }
+
+    override fun toString(): String = "Метод средних прямоугольников"
 }
