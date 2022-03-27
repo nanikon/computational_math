@@ -53,14 +53,14 @@ val functions = listOf(
         emptySet()
     ),
     IntegrateFunction(
-        { x -> BigDecimal.ONE.divide(x.sqrt(MathContext.DECIMAL64)) },
-        "1/sqrt(x)",
+        { x -> BigDecimal.ONE.divide(x.abs().sqrt(MathContext.DECIMAL64), MathContext.DECIMAL64) },
+        "1/sqrt(|x|)",
         setOf(
             BreakPoint(BigDecimal.ZERO, false)
         )
     ),
     IntegrateFunction(
-        { x -> BigDecimal.ONE.divide(BigDecimal.ONE.minus(x)) },
+        { x -> BigDecimal.ONE.divide(BigDecimal.ONE.minus(x), MathContext.DECIMAL64) },
         "1/(1-x)",
         setOf(
             BreakPoint(BigDecimal.ONE, true)

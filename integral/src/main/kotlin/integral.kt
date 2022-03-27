@@ -24,8 +24,8 @@ fun calculateIntegral(a: BigDecimal, b: BigDecimal, approximation: BigDecimal, f
     val intervals = mutableListOf<Pair<BigDecimal, BigDecimal>>()
     var startPoint = a
     for (point in function.valueBreakPoints.sorted()) {
-        if (point in a..b)  {
-            intervals.add(Pair(startPoint, point))
+        if (a < point && point < b)  {
+            if (startPoint != point) { intervals.add(Pair(startPoint, point)) }
             startPoint = point
             println("Интервал содержит сходящуюся точку разрыва $point")
         }
