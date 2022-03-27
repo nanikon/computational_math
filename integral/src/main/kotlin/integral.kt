@@ -23,20 +23,25 @@ fun main() {
 fun calculateIntegral(a: BigDecimal, b: BigDecimal, approximation: BigDecimal, function: IntegrateFunction, method: Method) {
     val intervals = mutableListOf<Pair<BigDecimal, BigDecimal>>()
     var startPoint = a
-    for (point in function.valueBreakPoints) {
+    for (point in function.valueBreakPoints.sorted()) {
         if (point in a..b)  {
             intervals.add(Pair(startPoint, point))
             startPoint = point
+            println("Интервал содержит сходящуюся точку разрыва $point")
         }
     }
     intervals.add(Pair(startPoint, b))
+    if (intervals.size != 1) {
+        println("Интеграл будет считатся на интервалах: ")
+        intervals.forEach { elem -> println("от ${elem.first} до ${elem.second}") }
+    }
     var n = 4
-    var currentValue = calculateSquares(intervals, function, method, n)
+    var currentValue = calculateSquares(intervals, approximation, function, method, n)
     var errorRate: BigDecimal
     do {
         n *= 2
         val lastValue = currentValue
-        currentValue = calculateSquares(intervals, function, method, n)
+        currentValue = calculateSquares(intervals, approximation, function, method, n)
         errorRate = currentValue
             .minus(lastValue)
             .divide((2.0.pow(method.accuracyOrder()) - 1).toBigDecimal(), MathContext.DECIMAL64)
@@ -49,11 +54,17 @@ fun calculateIntegral(a: BigDecimal, b: BigDecimal, approximation: BigDecimal, f
 
 fun calculateSquares(
     intervals: List<Pair<BigDecimal, BigDecimal>>,
+    approximation: BigDecimal,
     function: IntegrateFunction,
     method: Method,
     n: Int
 ) = intervals.sumOf { interval ->
-    method.calculateSquare(interval.first, interval.second, getH(interval.first, interval.second, n), function)
+    method.calculateSquare(
+        interval.first, interval.second,
+        getH(interval.first, interval.second, n),
+        function,
+        approximation
+    )
 }
 
 fun getH(a: BigDecimal, b: BigDecimal, n: Int) : BigDecimal = b.minus(a).divide(n.toBigDecimal(), MathContext.DECIMAL64)

@@ -20,7 +20,7 @@ class IntegrateFunction(
         }
     }
 
-    fun isBreakPoint(x: BigDecimal) = valueBreakPoints.contains(x)
+    private fun isBreakPoint(x: BigDecimal): Boolean = valueBreakPoints.contains(x)
 
     fun isDivergent(a: BigDecimal, b: BigDecimal) = breakPoints.fold(false) { acc, elem ->
         if (elem.x in a..b)
@@ -30,7 +30,9 @@ class IntegrateFunction(
         else acc
     }
 
-    fun calculate(x: BigDecimal) = function(x)
+    fun calculate(x: BigDecimal, position: PointPosition, approximation: BigDecimal) = function(
+        if (isBreakPoint(x)) position.value(x, approximation) else x
+    )
 
     override fun toString(): String = view
 }

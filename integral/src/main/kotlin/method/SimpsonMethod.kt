@@ -1,6 +1,7 @@
 package method
 
 import model.IntegrateFunction
+import model.PointPosition
 import util.sum
 import java.math.BigDecimal
 import java.math.MathContext
@@ -9,8 +10,14 @@ import java.math.MathContext
  * @author Natalia Nikonova
  */
 class SimpsonMethod : Method {
-   override fun calculateSquare(a: BigDecimal, b: BigDecimal, h: BigDecimal, function: IntegrateFunction): BigDecimal {
-      val values = getValues(a, b, h, function)
+   override fun calculateSquare(
+      a: BigDecimal,
+      b: BigDecimal,
+      h: BigDecimal,
+      function: IntegrateFunction,
+      approximation: BigDecimal
+   ): BigDecimal {
+      val values = getValues(a, b, h, function, approximation)
       val odd = values.filterIndexed { index, _ -> index % 2 == 1 }
       val even = values.filterIndexed { index, _ -> index % 2 == 0 && 0 != index && values.lastIndex != index }
       return values.first()
@@ -20,13 +27,21 @@ class SimpsonMethod : Method {
          .multiply(h.divide(BigDecimal(3), MathContext.DECIMAL64))
    }
 
-   private fun getValues(a: BigDecimal, b: BigDecimal, h: BigDecimal, function: IntegrateFunction) : List<BigDecimal> {
+   private fun getValues(
+      a: BigDecimal,
+      b: BigDecimal,
+      h: BigDecimal,
+      function: IntegrateFunction,
+      approximation: BigDecimal
+   ) : List<BigDecimal> {
       val result = mutableListOf<BigDecimal>()
-      var added = a
-      do {
-         result.add(function.calculate(added))
+      result.add(function.calculate(a, PointPosition.START, approximation))
+      var added = a.plus(h)
+      while (added < b.minus(h.divide(BigDecimal(2), MathContext.DECIMAL64))) {
+         result.add(function.calculate(added, PointPosition.MID, approximation))
          added = added.plus(h)
-      } while (added <= b)
+      }
+      result.add(function.calculate(b, PointPosition.END, approximation))
       return result
    }
 

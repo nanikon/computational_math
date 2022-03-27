@@ -9,10 +9,22 @@ import java.math.BigDecimal
  */
 abstract class RectMethod : Method {
 
-   override fun calculateSquare(a: BigDecimal, b: BigDecimal, h: BigDecimal, function: IntegrateFunction): BigDecimal =
-      getValues(a, b, h, function).sum().multiply(h)
+   override fun calculateSquare(
+      a: BigDecimal,
+      b: BigDecimal,
+      h: BigDecimal,
+      function: IntegrateFunction,
+      approximation: BigDecimal
+   ): BigDecimal =
+      getValues(a, b, h, function, approximation).sum().multiply(h)
 
-   abstract fun getValues(a: BigDecimal, b: BigDecimal, h: BigDecimal, function: IntegrateFunction) : List<BigDecimal>
+   abstract fun getValues(
+      a: BigDecimal,
+      b: BigDecimal,
+      h: BigDecimal,
+      function: IntegrateFunction,
+      approximation: BigDecimal
+   ) : List<BigDecimal>
 
    override fun accuracyOrder(): Int = 2
 }
