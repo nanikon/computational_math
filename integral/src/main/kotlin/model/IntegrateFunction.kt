@@ -22,6 +22,14 @@ class IntegrateFunction(
 
     fun isBreakPoint(x: BigDecimal) = valueBreakPoints.contains(x)
 
+    fun isDivergent(a: BigDecimal, b: BigDecimal) = breakPoints.fold(false) { acc, elem ->
+        if (elem.x in a..b)
+            acc || elem.isDivergent.also {
+                if (elem.isDivergent) { println("На интервала найдена несходящаяся точка разрыва ${elem.x}") }
+            }
+        else acc
+    }
+
     fun calculate(x: BigDecimal) = function(x)
 
     override fun toString(): String = view

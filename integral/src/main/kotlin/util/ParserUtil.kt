@@ -1,5 +1,6 @@
 package util
 
+import model.IntegrateFunction
 import java.math.BigDecimal
 
 /**
@@ -19,8 +20,12 @@ fun parseApprox() : BigDecimal {
     return parseBigDecimal("погрешность", "меньше единицы") { x -> x <= BigDecimal.ONE }
 }
 
-fun parseInterval() : Pair<BigDecimal, BigDecimal> {
-    val a = parseBigDecimal("левую границу интервала", "") { true }
-    val b = parseBigDecimal("правую границу интервала", "больше левой границы $a") { x -> x > a }
-    return Pair(a, b)
+fun parseInterval(function: IntegrateFunction) : Pair<BigDecimal, BigDecimal> {
+    while (true) {
+        val a = parseBigDecimal("левую границу интервала", "") { true }
+        val b = parseBigDecimal("правую границу интервала", "больше левой границы $a") { x -> x > a }
+        if (!function.isDivergent(a, b)) { return Pair(a, b) }
+        println("На введенном интервале невозможно посчитать интеграл. Попробуйте ещё раз")
+    }
+
 }
