@@ -32,6 +32,5 @@ class SimpsonMethod : Method {
 
    override fun accuracyOrder(): Int = 4
 
-
    override fun toString(): String = "Метод Симпсона"
 }
