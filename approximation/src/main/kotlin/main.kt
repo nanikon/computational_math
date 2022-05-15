@@ -1,4 +1,6 @@
+import approximation.CubicApproximation
 import approximation.LinearApproximation
+import approximation.QuadraticApproximation
 import utlis.chooseParser
 
 /**
@@ -6,7 +8,9 @@ import utlis.chooseParser
  */
 
 val approximations = listOf(
-    LinearApproximation()
+    LinearApproximation(),
+    QuadraticApproximation(),
+    CubicApproximation()
 )
 
 fun main() {
