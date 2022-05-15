@@ -10,6 +10,7 @@ import kotlin.system.exitProcess
 object SlaeCalculator {
     fun calculate(matrix: Matrix): List<BigDecimal> {
         val solution = mutableListOf<BigDecimal>()
+        (1..matrix.dim).forEach { _ -> solution.add(BigDecimal(0)) }
 
         for (i in 0 until matrix.dim) {
             val indexRowWithMaxElem = matrix.maxElemInColumn(i)

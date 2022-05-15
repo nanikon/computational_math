@@ -3,6 +3,7 @@ package approximation
 import slae.Matrix
 import slae.SlaeCalculator
 import java.math.BigDecimal
+import java.math.MathContext
 
 /**
  * @author Natalia Nikonova
@@ -22,4 +23,12 @@ abstract class Approximation {
         }
         return SlaeCalculator.calculate(matrix)
     }
+
+    protected fun calculateStandardDeviation(
+        data: List<Pair<BigDecimal, BigDecimal>>,
+        function: (BigDecimal) -> BigDecimal
+    ) : BigDecimal =
+        data.sumOf { coords -> (function(coords.first) - coords.second).pow(2) }
+            .divide(BigDecimal(data.size), MathContext.DECIMAL64)
+            .sqrt(MathContext.DECIMAL64)
 }

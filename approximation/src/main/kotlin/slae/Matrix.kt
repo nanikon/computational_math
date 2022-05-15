@@ -53,6 +53,6 @@ class Matrix (val dim: Int) {
 
     fun maxElemInColumn(index: Int) : Int {
         val maxElem = data.drop(index).maxOf { row -> row[index].abs() }
-        return data.drop(index).indexOfFirst { row -> row[index].abs() == maxElem }
+        return data.drop(index).indexOfFirst { row -> row[index].abs() == maxElem } + index
     }
 }
