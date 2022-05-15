@@ -1,5 +1,8 @@
 import approximation.CubicApproximation
+import approximation.ExponentialApproximation
 import approximation.LinearApproximation
+import approximation.LogarithmicApproximation
+import approximation.PowerApproximation
 import approximation.QuadraticApproximation
 import utlis.chooseParser
 
@@ -10,7 +13,10 @@ import utlis.chooseParser
 val approximations = listOf(
     LinearApproximation(),
     QuadraticApproximation(),
-    CubicApproximation()
+    CubicApproximation(),
+    PowerApproximation(),
+    ExponentialApproximation(),
+    LogarithmicApproximation()
 )
 
 fun main() {
@@ -19,4 +25,7 @@ fun main() {
     val results = approximations.map { approximation ->
         approximation.calculateCoefAndError(points).also { println("${it.first}, СКО: ${it.second}") }
     }
+    val minSko = results.minOf { result -> result.second }
+    val bestApproximation = results[results.indexOfFirst { approx -> approx.second == minSko }]
+    println("\nНаилучшая аппроксимирующая функция: ${bestApproximation.first}, её СКО - ${bestApproximation.second}")
 }
