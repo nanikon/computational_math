@@ -37,4 +37,8 @@ abstract class Approximation {
             .divide(BigDecimal(data.size), MathContext.DECIMAL64)
             .sqrt(MathContext.DECIMAL64)
             .also { println("СКО: $it") }
+
+    protected fun toStr(value:BigDecimal): String =
+        if (value >= BigDecimal.ZERO) { "+ $value" }
+        else { "- ${value.abs()}" }
 }

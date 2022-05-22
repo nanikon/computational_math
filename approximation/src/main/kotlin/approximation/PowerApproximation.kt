@@ -23,8 +23,9 @@ class PowerApproximation : Approximation() {
         val coef = convertToMatrixAndSolve(modifyPoints, 1)
         val b = coef[1]
         val a = exp(coef[0].toDouble()).toBigDecimal(MathContext.DECIMAL64)
-        println("Получена функция: $a * x^$b")
-        val string = "Степенная аппроксимация: $a * x^$b"
+        val strFunction = "$a * x^$b"
+        println("Получена функция: $strFunction")
+        val string = "Степенная аппроксимация: $strFunction"
         val sko = calculateStandardDeviation(points) { x ->
             a * x.toDouble().pow(b.toDouble()).toBigDecimal(MathContext.DECIMAL64)
         }

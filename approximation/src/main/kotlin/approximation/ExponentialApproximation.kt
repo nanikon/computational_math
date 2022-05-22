@@ -19,8 +19,9 @@ class ExponentialApproximation : Approximation() {
         val coef = convertToMatrixAndSolve(modifyPoints, 1)
         val b = coef[1]
         val a = exp(coef[0].toDouble()).toBigDecimal(MathContext.DECIMAL64)
-        println("Получена функция: $a * e^($b * x)")
-        val string = "Экспоненциальная аппроксимация: $a * e^($b * x)"
+        val strFunction = "$a * e^($b * x)"
+        println("Получена функция: $strFunction")
+        val string = "Экспоненциальная аппроксимация: $strFunction"
         val sko = calculateStandardDeviation(points) { x ->
             a * exp((x * b).toDouble()).toBigDecimal(MathContext.DECIMAL64)
         }

@@ -16,8 +16,9 @@ class LogarithmicApproximation : Approximation() {
         println("x линеаризуется, у не изменяется: " + modifyPoints.joinToString(separator = ", ") { "(" + it.first + ";" + it.second + ")" })
         println("n, sum(x), sum(x^2), sum(y), sum(x*y)")
         val coef = convertToMatrixAndSolve(modifyPoints, 1)
-        println("Получена функция: ${coef[0]} + ${coef[1]} * ln(x)")
-        val string = "Логарифмическая аппроксимация: ${coef[0]} + ${coef[1]} * ln(x)"
+        val strFunction = "${coef[0]} ${toStr(coef[1])} * ln(x)"
+        println("Получена функция: $strFunction")
+        val string = "Логарифмическая аппроксимация: $strFunction"
         val sko = calculateStandardDeviation(points) { x ->
             coef[0] + coef[1] * ln(x.toDouble()).toBigDecimal(MathContext.DECIMAL64)
         }

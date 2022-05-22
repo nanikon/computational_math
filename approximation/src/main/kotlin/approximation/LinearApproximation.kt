@@ -12,8 +12,9 @@ class LinearApproximation : Approximation() {
       println("Точки не изменяются: " + points.joinToString(separator = ", ") { "(" + it.first + ";" + it.second + ")" })
       println("n, sum(x), sum(x^2), sum(y), sum(x*y)")
       val coef = convertToMatrixAndSolve(points, 1)
-      println("Получена функция: ${coef[0]} + ${coef[1]} * x")
-      val string = "Линейная аппроксимация: ${coef[0]} + ${coef[1]} * x"
+      val strFunction = "${coef[0]} ${toStr(coef[1])} * x"
+      println("Получена функция: $strFunction")
+      val string = "Линейная аппроксимация: $strFunction"
       val sko = calculateStandardDeviation(points) { x -> coef[0] + coef[1] * x }
       correlation(points)
       println()
