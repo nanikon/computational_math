@@ -7,18 +7,28 @@ import java.math.MathContext
  * @author Natalia Nikonova
  */
 class LinearApproximation : Approximation() {
-   override fun calculateCoefAndError(points: List<Pair<BigDecimal, BigDecimal>>): Pair<String, BigDecimal> {
+   override fun calculateCoefAndError(points: List<Pair<BigDecimal, BigDecimal>>): Triple<String, BigDecimal, Map<String, List<BigDecimal>>> {
       println("Линейная аппрокимация")
       println("Точки не изменяются: " + points.joinToString(separator = ", ") { "(" + it.first + ";" + it.second + ")" })
       println("n, sum(x), sum(x^2), sum(y), sum(x*y)")
+
       val coef = convertToMatrixAndSolve(points, 1)
       val strFunction = "${coef[0]} ${toStr(coef[1])} * x"
+      val function = { x: BigDecimal -> coef[0] + coef[1] * x }
+
       println("Получена функция: $strFunction")
       val string = "Линейная аппроксимация: $strFunction"
-      val sko = calculateStandardDeviation(points) { x -> coef[0] + coef[1] * x }
+
+      val sko = calculateStandardDeviation(points, function)
       correlation(points)
       println()
-      return Pair(string, sko)
+      val graphPoints = getGraphPoints(points, function)
+      val coords = mapOf(
+         "x" to graphPoints["x"]!!,
+         string to graphPoints["y"]!!
+      )
+
+      return Triple(string, sko, coords)
    }
 
    private fun correlation(points: List<Pair<BigDecimal, BigDecimal>>) {
