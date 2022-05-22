@@ -16,12 +16,16 @@ abstract class Approximation {
         val variables = listOf(BigDecimal(data.size)) +
                 (1..2 * n).map { i -> data.sumOf { coords -> coords.first.pow(i) } }
         val bColumn = (0..n).map { i -> data.sumOf { coords -> coords.second * coords.first.pow(i) } }
+        println((variables + bColumn).joinToString(separator = " "))
         val matrix = Matrix(n + 1).apply {
             (0..n).forEach{ i ->
                 setRow(i, (variables.subList(i, i + n + 1) + bColumn[i]) as MutableList<BigDecimal>)
             }
         }
+        println("Получена матрица:")
+        matrix.printMatrix()
         return SlaeCalculator.calculate(matrix)
+            .also { println("Решение матрицы: " + it.joinToString(separator = " ")) }
     }
 
     protected fun calculateStandardDeviation(
@@ -29,6 +33,8 @@ abstract class Approximation {
         function: (BigDecimal) -> BigDecimal
     ) : BigDecimal =
         data.sumOf { coords -> (function(coords.first) - coords.second).pow(2) }
+            .also { println("Сумма квадратов отклонений: $it") }
             .divide(BigDecimal(data.size), MathContext.DECIMAL64)
             .sqrt(MathContext.DECIMAL64)
+            .also { println("СКО: $it") }
 }

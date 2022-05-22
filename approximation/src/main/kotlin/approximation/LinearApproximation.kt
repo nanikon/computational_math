@@ -8,10 +8,15 @@ import java.math.MathContext
  */
 class LinearApproximation : Approximation() {
    override fun calculateCoefAndError(points: List<Pair<BigDecimal, BigDecimal>>): Pair<String, BigDecimal> {
+      println("Линейная аппрокимация")
+      println("Точки не изменяются: " + points.joinToString(separator = ", ") { "(" + it.first + ";" + it.second + ")" })
+      println("n, sum(x), sum(x^2), sum(y), sum(x*y)")
       val coef = convertToMatrixAndSolve(points, 1)
+      println("Получена функция: ${coef[0]} + ${coef[1]} * x")
       val string = "Линейная аппроксимация: ${coef[0]} + ${coef[1]} * x"
       val sko = calculateStandardDeviation(points) { x -> coef[0] + coef[1] * x }
       correlation(points)
+      println()
       return Pair(string, sko)
    }
 
@@ -35,6 +40,6 @@ class LinearApproximation : Approximation() {
          coef.abs() > BigDecimal(0.3) -> "связь умеренная"
          else -> "связь слабая"
       }
-      println("Коэффициент корреляции Пирсона для линейной зависимости $coef: $decision")
+      println("Коэффициент корреляции Пирсона: $coef - $decision")
     }
 }

@@ -10,16 +10,21 @@ import kotlin.math.ln
  */
 class ExponentialApproximation : Approximation() {
     override fun calculateCoefAndError(points: List<Pair<BigDecimal, BigDecimal>>): Pair<String, BigDecimal> {
+        println("Экспоненциальная аппрокимация")
         val modifyPoints = points.map { coords ->
             Pair(coords.first, ln(coords.second.toDouble()).toBigDecimal(MathContext.DECIMAL64))
         }
+        println("x не изменяется, у линеаризируется: " + modifyPoints.joinToString(separator = ", ") { "(" + it.first + ";" + it.second + ")" })
+        println("n, sum(x), sum(x^2), sum(y), sum(x*y)")
         val coef = convertToMatrixAndSolve(modifyPoints, 1)
         val b = coef[1]
         val a = exp(coef[0].toDouble()).toBigDecimal(MathContext.DECIMAL64)
+        println("Получена функция: $a * e^($b * x)")
         val string = "Экспоненциальная аппроксимация: $a * e^($b * x)"
         val sko = calculateStandardDeviation(points) { x ->
             a * exp((x * b).toDouble()).toBigDecimal(MathContext.DECIMAL64)
         }
+        println()
         return Pair(string, sko)
     }
 }

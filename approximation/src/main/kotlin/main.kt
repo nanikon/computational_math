@@ -23,7 +23,7 @@ fun main() {
     val parser = chooseParser()
     val points = parser.parse()
     val results = approximations.map { approximation ->
-        approximation.calculateCoefAndError(points).also { println("${it.first}, СКО: ${it.second}") }
+        approximation.calculateCoefAndError(points)
     }
     val minSko = results.minOf { result -> result.second }
     val bestApproximation = results[results.indexOfFirst { approx -> approx.second == minSko }]
