@@ -32,8 +32,8 @@ abstract class Approximation {
         data: List<Pair<BigDecimal, BigDecimal>>,
         function: (BigDecimal) -> BigDecimal
     ) : BigDecimal =
-        data.sumOf { coords -> (function(coords.first) - coords.second).pow(2) }
-            .also { println("Сумма квадратов отклонений: $it") }
+        data.sumOf { coords -> (function(coords.first) - coords.second).pow(2).also { print("$it ") } }
+            .also { println("\nСумма квадратов отклонений: $it") }
             .divide(BigDecimal(data.size), MathContext.DECIMAL64)
             .sqrt(MathContext.DECIMAL64)
             .also { println("СКО: $it") }

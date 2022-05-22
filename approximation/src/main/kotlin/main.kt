@@ -26,8 +26,8 @@ val colors = listOf(
     "blue",
     "dark-green",
     "orange",
-    "pink",
     "red",
+    "pink",
     "yellow"
 )
 
