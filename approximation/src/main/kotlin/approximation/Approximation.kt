@@ -9,7 +9,7 @@ import java.math.MathContext
  * @author Natalia Nikonova
  */
 abstract class Approximation {
-    abstract fun calculateCoefAndError(points: List<Pair<BigDecimal, BigDecimal>>): Triple<String, BigDecimal, Map<String, List<BigDecimal>>>
+    abstract fun calculateCoefAndError(points: List<Pair<BigDecimal, BigDecimal>>): Triple<String, BigDecimal, Map<String, List<BigDecimal>>>?
 
     // data - координаты точек, n - степень полинома аппрокимации (1 - линейная, 2 - квадратичная и т.д.)
     protected fun convertToMatrixAndSolve(data: List<Pair<BigDecimal, BigDecimal>>, n: Int): List<BigDecimal> {

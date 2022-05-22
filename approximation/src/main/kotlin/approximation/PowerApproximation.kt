@@ -10,12 +10,17 @@ import kotlin.math.pow
  * @author Natalia Nikonova
  */
 class PowerApproximation : Approximation() {
-    override fun calculateCoefAndError(points: List<Pair<BigDecimal, BigDecimal>>): Triple<String, BigDecimal, Map<String, List<BigDecimal>>> {
-        val modifyPoints = points.map { coords ->
-            Pair(
-                ln(coords.first.toDouble()).toBigDecimal(MathContext.DECIMAL64),
-                ln(coords.second.toDouble()).toBigDecimal(MathContext.DECIMAL64)
-            )
+    override fun calculateCoefAndError(points: List<Pair<BigDecimal, BigDecimal>>): Triple<String, BigDecimal, Map<String, List<BigDecimal>>>? {
+        val modifyPoints = runCatching {
+            points.map { coords ->
+                Pair(
+                    ln(coords.first.toDouble()).toBigDecimal(MathContext.DECIMAL64),
+                    ln(coords.second.toDouble()).toBigDecimal(MathContext.DECIMAL64)
+                )
+            }
+        }.getOrNull() ?: run {
+            println("Невозможно использовать степенную аппроксимацию, так как есть точки с х и у, меньше нуля")
+            return null
         }
 
         println("Степенная аппрокимация")

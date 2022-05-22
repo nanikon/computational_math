@@ -8,9 +8,14 @@ import kotlin.math.ln
  * @author Natalia Nikonova
  */
 class LogarithmicApproximation : Approximation() {
-    override fun calculateCoefAndError(points: List<Pair<BigDecimal, BigDecimal>>): Triple<String, BigDecimal, Map<String, List<BigDecimal>>> {
-        val modifyPoints = points.map { coords ->
-            Pair(ln(coords.first.toDouble()).toBigDecimal(MathContext.DECIMAL64), coords.second)
+    override fun calculateCoefAndError(points: List<Pair<BigDecimal, BigDecimal>>): Triple<String, BigDecimal, Map<String, List<BigDecimal>>>? {
+        val modifyPoints = runCatching {
+            points.map { coords ->
+                Pair(ln(coords.first.toDouble()).toBigDecimal(MathContext.DECIMAL64), coords.second)
+            }
+        }.getOrNull() ?: run {
+            println("Невозможно использовать логарифмическую аппроксимацию, так как есть точки с х и у, меньше нуля")
+            return null
         }
 
         println("Логарифмическая аппрокимация")

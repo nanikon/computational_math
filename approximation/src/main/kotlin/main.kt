@@ -40,8 +40,8 @@ fun main() {
         "y" to points.map { it.second }
     )
     var legend = ""
-    val results = approximations.mapIndexed { index, approximation ->
-        approximation.calculateCoefAndError(points).also { answer ->
+    val results = approximations.mapIndexedNotNull { index, approximation ->
+        approximation.calculateCoefAndError(points)?.also { answer ->
             plot += geomPoint(
             data = answer.third,
             color = colors[index],

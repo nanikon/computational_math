@@ -9,9 +9,14 @@ import kotlin.math.ln
  * @author Natalia Nikonova
  */
 class ExponentialApproximation : Approximation() {
-    override fun calculateCoefAndError(points: List<Pair<BigDecimal, BigDecimal>>): Triple<String, BigDecimal, Map<String, List<BigDecimal>>> {
-        val modifyPoints = points.map { coords ->
-            Pair(coords.first, ln(coords.second.toDouble()).toBigDecimal(MathContext.DECIMAL64))
+    override fun calculateCoefAndError(points: List<Pair<BigDecimal, BigDecimal>>): Triple<String, BigDecimal, Map<String, List<BigDecimal>>>? {
+        val modifyPoints = runCatching {
+            points.map { coords ->
+                Pair(coords.first, ln(coords.second.toDouble()).toBigDecimal(MathContext.DECIMAL64))
+            }
+        }.getOrNull() ?: run {
+            println("Невозможно использовать экспоненциальную аппроксимацию, так как есть точки с у меньше нуля")
+            return null
         }
 
         println("Экспоненциальная аппрокимация")
