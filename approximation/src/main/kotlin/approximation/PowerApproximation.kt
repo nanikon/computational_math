@@ -30,7 +30,7 @@ class PowerApproximation : Approximation() {
         val coef = convertToMatrixAndSolve(modifyPoints, 1)
         val b = coef[1]
         val a = exp(coef[0].toDouble()).toBigDecimal(MathContext.DECIMAL64)
-        val strFunction = "$a * x^$b"
+        val strFunction = "%.3f * x^%.3f".format(a, b)
         val function = { x: BigDecimal -> a * x.toDouble().pow(b.toDouble()).toBigDecimal(MathContext.DECIMAL64) }
 
         println("Получена функция: $strFunction")

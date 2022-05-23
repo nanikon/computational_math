@@ -36,11 +36,11 @@ abstract class Approximation {
             .also { println("\nСумма квадратов отклонений: $it") }
             .divide(BigDecimal(data.size), MathContext.DECIMAL64)
             .sqrt(MathContext.DECIMAL64)
-            .also { println("СКО: $it") }
+            .also { println("СКО: %.3f".format(it)) }
 
     protected fun toStr(value:BigDecimal): String =
-        if (value >= BigDecimal.ZERO) { "+ $value" }
-        else { "- ${value.abs()}" }
+        if (value >= BigDecimal.ZERO) { "+ %.3f".format(value) }
+        else { "- %.3f".format(value.abs()) }
 
     protected fun getGraphPoints(
         data: List<Pair<BigDecimal, BigDecimal>>,

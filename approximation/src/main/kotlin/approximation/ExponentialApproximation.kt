@@ -26,7 +26,7 @@ class ExponentialApproximation : Approximation() {
         val coef = convertToMatrixAndSolve(modifyPoints, 1)
         val b = coef[1]
         val a = exp(coef[0].toDouble()).toBigDecimal(MathContext.DECIMAL64)
-        val strFunction = "$a * e^($b * x)"
+        val strFunction = "%.3f * e^(%.3f * x)".format(a, b)
         val function = { x: BigDecimal -> a * exp((x * b).toDouble()).toBigDecimal(MathContext.DECIMAL64) }
 
         println("Получена функция: $strFunction")

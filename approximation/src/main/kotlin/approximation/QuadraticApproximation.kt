@@ -12,7 +12,7 @@ class QuadraticApproximation : Approximation() {
       println("n, sum(x), sum(x^2), sum(x^3), sum(x^4), sum(y), sum(x*y), sum(x^2*y)")
 
       val coef = convertToMatrixAndSolve(points, 2)
-      val strFunction = "${coef[0]} ${toStr(coef[1])} * x ${toStr(coef[2])} * x^2"
+      val strFunction = "%.3f ${toStr(coef[1])} * x ${toStr(coef[2])} * x^2".format(coef[0])
       val function = { x: BigDecimal -> coef[0] + coef[1] * x + coef[2] * x.pow(2) }
 
       println("Получена функция: $strFunction")

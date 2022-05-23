@@ -13,7 +13,7 @@ class LinearApproximation : Approximation() {
       println("n, sum(x), sum(x^2), sum(y), sum(x*y)")
 
       val coef = convertToMatrixAndSolve(points, 1)
-      val strFunction = "${coef[0]} ${toStr(coef[1])} * x"
+      val strFunction = "%.3f ${toStr(coef[1])} * x".format(coef[0])
       val function = { x: BigDecimal -> coef[0] + coef[1] * x }
 
       println("Получена функция: $strFunction")
