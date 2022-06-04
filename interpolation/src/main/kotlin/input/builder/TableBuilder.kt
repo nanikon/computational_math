@@ -20,7 +20,7 @@ class TableBuilder : Builder {
                         print("Введенный x совпадает с известным значением функции")
                     }
                     x < table.minOf { it.first } || x > table.maxOf { it.first } -> false.also {
-                        print("Введенный x совпадает с известным значением функции")
+                        print("Введенный x не входит в ОДЗ заданной функции")
                     }
                     else -> true
                 }

@@ -26,6 +26,17 @@ object Parser {
         }
     }
 
+    fun parseCount(): Int {
+        println("Введите количество узлов интерполяции")
+        while (true) {
+            val result = readLine()?.trim()?.toIntOrNull()
+            if (result != null && result > 2 && result < 13) {
+                return result
+            }
+            println("Некорректный ввод. Кол-во узлов должно быть целым числом в интервале [3, 12]. Попробуйте ещё раз")
+        }
+    }
+
     private fun parsePair(i: Int) : Pair<BigDecimal, BigDecimal> {
         println("Введите коориданту $i-ой узла по х, затем пробел, затем координату узла по y")
         while (true) {
@@ -48,14 +59,4 @@ object Parser {
         }
     }
 
-    private fun parseCount(): Int {
-        println("Введите количество узлов интерполяции")
-        while (true) {
-            val result = readLine()?.trim()?.toIntOrNull()
-            if (result != null && result > 2 && result < 13) {
-                return result
-            }
-            println("Некорректный ввод. Кол-во узлов должно быть целым числом в интервале [3, 12]. Попробуйте ещё раз")
-        }
-    }
 }
