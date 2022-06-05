@@ -8,3 +8,8 @@ import java.math.BigDecimal
 interface Method {
     fun compute(x: BigDecimal, table: List<Pair<BigDecimal, BigDecimal>>): Pair<BigDecimal, BigDecimal>
 }
+
+val methods = listOf(
+    LagrangeMethod(),
+    NewtonMethod()
+)
