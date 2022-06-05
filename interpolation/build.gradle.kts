@@ -13,10 +13,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-}
-
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
+    implementation("org.jetbrains.lets-plot:lets-plot-common:2.2.0")
+    implementation("org.jetbrains.lets-plot:lets-plot-kotlin-jvm:3.1.1")
+    implementation("org.slf4j:slf4j-simple:1.7.32")
 }
