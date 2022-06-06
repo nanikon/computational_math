@@ -37,6 +37,6 @@ val equations = listOf(
                 .divide(x * exp(x.toDouble()).toBigDecimal(MathContext.DECIMAL32) + c, MathContext.DECIMAL32)
         },
         "y' = y + (1 + x) * y^2",
-        { c -> "y = -e^x / (x * e^x + $c" }
+        { c -> "y = -e^x / (x * e^x + $c)" }
     )
 )

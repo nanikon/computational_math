@@ -8,7 +8,7 @@ import model.equations
  */
 fun chooseEquation(): DiffEquation {
     println("Выберите уравнение для решения и введите его номер:")
-    equations.forEachIndexed { index, equation -> println("${index + 1} - $equation") }
+    equations.forEachIndexed { index, equation -> println("${index + 1} - ${equation.strEquation}") }
     while(true) {
         try {
             val chose = readLine()!!.trim()
