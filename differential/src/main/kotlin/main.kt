@@ -1,4 +1,5 @@
 import method.AdamsMethod
+import method.RungeKuttaMethod
 import util.Parser
 import util.chooseEquation
 import java.math.BigDecimal
@@ -22,11 +23,12 @@ fun main() {
 
     val xs = mutableListOf(a)
     var elem = a + h
-    while (elem != b) {
+    while (elem <= b) {
         xs.add(elem)
         elem += h
     }
 
     val ys = xs.map { equation.compute(it) }
-    val result2 = AdamsMethod.compute(equation, xs, ys, h, eps)
+    val result1 = RungeKuttaMethod.compute(equation, xs, y0, eps)
+    val result2 = AdamsMethod.compute(equation, xs, result1.take(4), h, eps)
 }
