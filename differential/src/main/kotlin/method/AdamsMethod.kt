@@ -1,8 +1,8 @@
 package method
 
 import model.DiffEquation
+import util.divideN
 import java.math.BigDecimal
-import java.math.MathContext
 
 /**
  * @author Natalia Nikonova
@@ -17,7 +17,7 @@ object AdamsMethod {
         val ys = y4.toMutableList()
         for (i in 4 until xs.size) {
             var newY = ys[i - 1] +
-                    h.divide(BigDecimal(24), MathContext.DECIMAL32) * (
+                    h.divideN(24) * (
                     BigDecimal(55) * diff.function(xs[i - 1], ys[i - 1]) -
                             BigDecimal(59) * diff.function(xs[i - 2], ys[i - 2]) +
                             BigDecimal(37) * diff.function(xs[i - 3], ys[i - 3]) -
@@ -26,9 +26,9 @@ object AdamsMethod {
             var oldY: BigDecimal
             do {
                 oldY = newY
-                newY = ys[i - 1] + h.divide(BigDecimal(24), MathContext.DECIMAL32) * (
-                        BigDecimal(9) * diff.function(xs[i], oldY) -
-                                BigDecimal(19) * diff.function(xs[i - 1], xs[i - 1]) -
+                newY = ys[i - 1] + h.divideN(24) * (
+                        BigDecimal(9) * diff.function(xs[i], oldY) +
+                                BigDecimal(19) * diff.function(xs[i - 1], ys[i - 1]) -
                                 BigDecimal(5) * diff.function(xs[i - 2], ys[i - 2]) +
                                 BigDecimal(1) * diff.function(xs[i - 3], ys[i - 3])
                         )

@@ -28,7 +28,15 @@ fun main() {
         elem += h
     }
 
-    val ys = xs.map { equation.compute(it) }
-    val result1 = RungeKuttaMethod.compute(equation, xs, y0, eps)
-    val result2 = AdamsMethod.compute(equation, xs, result1.take(4), h, eps)
+    println("Сеточная функция")
+    println(xs.joinToString(separator = " ", prefix = "Аргумент:\t\t") { "%.6f".format(it) })
+    val ys = xs.map { equation.compute(it) }.also { list ->
+        println(list.joinToString(separator = " ", prefix = "Точное:\t\t\t") { "%.6f".format(it) })
+    }
+    val result1 = RungeKuttaMethod.compute(equation, xs, y0, eps).also { list ->
+        println(list.joinToString(separator = " ", prefix = "Рунге-Кутта:\t") { "%.6f".format(it) })
+    }
+    val result2 = AdamsMethod.compute(equation, xs, result1.take(4), h, eps).also { list ->
+        println(list.joinToString(separator = " ", prefix = "Адамса:\t\t\t") { "%.6f".format(it) })
+    }
 }
