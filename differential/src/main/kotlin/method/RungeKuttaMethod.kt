@@ -20,7 +20,7 @@ object RungeKuttaMethod {
             n *= 2
             newY = calculateInterval(diff.function, xs[i - 1], xs[i], ys[i - 1], n)
          } while ((oldY - newY).divideN(15).abs() >= eps) // 2 ^ 4 - 1 = 16 - 1 = 15
-         ys.add(oldY)
+         ys.add(newY)
       }
       return ys
    }
