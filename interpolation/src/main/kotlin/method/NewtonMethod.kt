@@ -25,10 +25,8 @@ class NewtonMethod : Method {
         val middle = (xs[0] + xs.last()).divide(BigDecimal(2), MathContext.DECIMAL32)
         val h = xs[1] - xs[0]
         var y = BigDecimal.ZERO
-        // print("Значение многочлена Ньютона при x=$x: ")
         var stringEq = ""
         var stringDiff = ""
-        // print("Используемые конечные разности: ")
         if (x < middle) {
             // формула вперед
             println("Используется формула вперед")
@@ -40,7 +38,7 @@ class NewtonMethod : Method {
                 if (j != 0) { stringEq += " + " }
                 stringEq += "${finiteDifferences[j][i]} * $factor"
                 y += finiteDifferences[j][i] * factor
-                stringDiff += "${finiteDifferences[j][j]} "
+                stringDiff += "${finiteDifferences[j][i]} "
                 factor *= (t - j.toBigDecimal()).divide((j + 1).toBigDecimal(), MathContext.DECIMAL32)
             }
         } else {
