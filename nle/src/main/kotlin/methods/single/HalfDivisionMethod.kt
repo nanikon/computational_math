@@ -40,7 +40,7 @@ class HalfDivisionMethod(
          x = a.plus(b).divide(BigDecimal(2), MathContext.DECIMAL64)
          y = eq.function(x)
          count++
-         println("Итерация №$count: левая граница $a, правая граница $b, приближение к корню $x, значение функции в нем $y")
+         println("Итерация №$count: левая граница $a, правая граница $b, приближение к корню $x, длина интервала ${b.minus(a)}, значение функции в нем $y")
          if (y.multiply(eq.function(a)) < BigDecimal.ZERO) { b = x } else { a = x }
       }
       val delta = rightBorder.minus(leftBorder).divide(BigDecimal(5), MathContext.DECIMAL64)
